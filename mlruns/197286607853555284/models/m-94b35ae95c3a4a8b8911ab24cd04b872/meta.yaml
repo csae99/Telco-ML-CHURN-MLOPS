@@ -1,0 +1,10 @@
+artifact_location: file:///home/jovyan/work/Telco-Customer-Churn-ML/mlruns/197286607853555284/models/m-94b35ae95c3a4a8b8911ab24cd04b872/artifacts
+creation_timestamp: 1774619342821
+experiment_id: '197286607853555284'
+last_updated_timestamp: 1774619354226
+model_id: m-94b35ae95c3a4a8b8911ab24cd04b872
+model_type: null
+name: model
+source_run_id: af2f37eaa5244282a4d386a3d2733f25
+status: 2
+status_message: null

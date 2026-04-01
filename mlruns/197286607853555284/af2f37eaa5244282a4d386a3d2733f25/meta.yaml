@@ -1,0 +1,14 @@
+artifact_uri: file:///home/jovyan/work/Telco-Customer-Churn-ML/mlruns/197286607853555284/af2f37eaa5244282a4d386a3d2733f25/artifacts
+end_time: 1774619354562
+entry_point_name: ''
+experiment_id: '197286607853555284'
+lifecycle_stage: active
+run_id: af2f37eaa5244282a4d386a3d2733f25
+run_name: defiant-loon-272
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1774619340919
+status: 3
+tags: []
+user_id: jovyan

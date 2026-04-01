@@ -1,0 +1,14 @@
+artifact_uri: file:///home/jovyan/work/Telco-Customer-Churn-ML/mlruns/197286607853555284/49ad64c3e7a54d6aae526ecf2e81db47/artifacts
+end_time: 1774874226168
+entry_point_name: ''
+experiment_id: '197286607853555284'
+lifecycle_stage: active
+run_id: 49ad64c3e7a54d6aae526ecf2e81db47
+run_name: bright-donkey-574
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1774874216905
+status: 3
+tags: []
+user_id: jovyan

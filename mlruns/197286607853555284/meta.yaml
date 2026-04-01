@@ -1,0 +1,7 @@
+artifact_location: file:///home/jovyan/work/Telco-Customer-Churn-ML/mlruns/197286607853555284
+creation_time: 1774619340726
+experiment_id: '197286607853555284'
+last_update_time: 1774619340726
+lifecycle_stage: active
+name: Telco Churn - XGBoost
+workspace: default

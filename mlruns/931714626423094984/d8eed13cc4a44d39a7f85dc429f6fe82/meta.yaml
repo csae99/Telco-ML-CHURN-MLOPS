@@ -1,0 +1,15 @@
+artifact_uri: file:///home/jovyan/work/Telco-Customer-Churn-ML/mlruns/931714626423094984/d8eed13cc4a44d39a7f85dc429f6fe82/artifacts
+end_time: 1774877757756
+entry_point_name: ''
+experiment_id: '931714626423094984'
+lifecycle_stage: active
+run_id: d8eed13cc4a44d39a7f85dc429f6fe82
+run_name: secretive-dolphin-85
+run_uuid: d8eed13cc4a44d39a7f85dc429f6fe82
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1774877757054
+status: 4
+tags: []
+user_id: jovyan

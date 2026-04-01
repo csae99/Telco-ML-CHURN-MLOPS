@@ -1,0 +1,15 @@
+artifact_uri: file:///home/jovyan/work/Telco-Customer-Churn-ML/mlruns/931714626423094984/e999ea627f7549eca612dada55d8d533/artifacts
+end_time: 1774878730157
+entry_point_name: ''
+experiment_id: '931714626423094984'
+lifecycle_stage: active
+run_id: e999ea627f7549eca612dada55d8d533
+run_name: thundering-wren-936
+run_uuid: e999ea627f7549eca612dada55d8d533
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1774878729550
+status: 4
+tags: []
+user_id: jovyan
