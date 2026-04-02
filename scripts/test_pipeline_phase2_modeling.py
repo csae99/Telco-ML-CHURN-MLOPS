@@ -2,10 +2,11 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 import optuna
+import json
 
 print("=== Phase 2: Modeling with XGBoost ===")
 
-df = pd.read_csv("data/processed/telco_churn_processed.csv")
+df = pd.read_csv("/home/jovyan/work/Telco-Customer-Churn-ML/data/processed/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 
 # target must be numeric 0/1
 if df["Churn"].dtype == "object":
@@ -21,7 +22,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, stratify=y, random_state=42
 )
 
-THRESHOLD = 0.4
+THRESHOLD = 0.3
 
 def objective(trial):
     params = {
@@ -50,3 +51,20 @@ study = optuna.create_study(direction="maximize")
 study.optimize(objective, n_trials=30)
 print("Best Params:", study.best_params)
 print("Best Recall:", study.best_value)
+
+# Store best_parms in json
+
+best_params = study.best_params
+best_score = study.best_value
+
+output = {
+    "best_params": best_params,
+    "best_recall": best_score,
+    "threshold": THRESHOLD
+}
+
+# Save to file
+with open("best_params.json", "w") as f:
+    json.dump(output, f, indent=4)
+
+print("✅ Saved best parameters to best_params.json")
