@@ -22,7 +22,7 @@ pipeline {
         stage('Setup Python Environment') {
             steps {
                 sh '''
-                rm -rf venv
+                // rm -rf venv
                 python3 -m venv venv
                 . venv/bin/activate
                 python --version
