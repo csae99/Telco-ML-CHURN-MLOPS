@@ -7,19 +7,15 @@ pipeline {
         REGISTRY = "docker.io/YOUR_USERNAME"   // change this
         FULL_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${TAG}"
     }
-    tools{
-        python 'python-3.11'
-    }
 
     stages {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+                git branch: 'churn-api-lite',
+                    url: 'https://github.com/csae99/Telco-ML-CHURN-MLOPS.git'
             }
         }
-
         stage('Setup Python Environment') {
             steps {
                 sh '''
@@ -30,12 +26,29 @@ pipeline {
                 '''
             }
         }
+        stage('Prepare Processed_data') {
+            steps {
+                sh '''
+                . venv/bin/activate
+                python3 scripts/prepare_processed_data.py
+                '''
+            }
+        }
+        stage('Data featuring and modelling') {
+            steps {
+                sh '''
+                . venv/bin/activate
+                python3 scripts/test_pipeline_phase1_data_features.py
+                python3 scripts/test_pipeline_phase2_modeling.py
+                '''
+            }
+        }
 
         stage('Hyperparameter Tuning') {
             steps {
                 sh '''
                 . venv/bin/activate
-                python scripts/tune_model.py
+                python scripts/run_pipeline.py
                 '''
             }
         }
@@ -53,7 +66,7 @@ pipeline {
                 sh '''
                 . venv/bin/activate
                 python scripts/run_pipeline.py \
-                    --input data/raw/Telco-Customer-Churn.csv \
+                    --input data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv \
                     --target Churn
                 '''
             }
@@ -67,27 +80,27 @@ pipeline {
             }
         }
 
-        stage('Login to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    sh '''
-                    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                    '''
-                }
-            }
-        }
+        // stage('Login to Docker Hub') {
+        //     steps {
+        //         withCredentials([usernamePassword(
+        //             credentialsId: 'dockerhub-creds',
+        //             usernameVariable: 'DOCKER_USER',
+        //             passwordVariable: 'DOCKER_PASS'
+        //         )]) {
+        //             sh '''
+        //             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+        //             '''
+        //         }
+        //     }
+        // }
 
-        stage('Push Docker Image') {
-            steps {
-                sh '''
-                docker push $FULL_IMAGE
-                '''
-            }
-        }
+        // stage('Push Docker Image') {
+        //     steps {
+        //         sh '''
+        //         docker push $FULL_IMAGE
+        //         '''
+        //     }
+        // }
 
         stage('Deploy Container (Optional)') {
             steps {
