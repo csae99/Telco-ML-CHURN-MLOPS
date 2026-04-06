@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:3.11-slim'
-            args '--network=mlflow-network'
+            args '--network=mlflow-network -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     environment {
