@@ -8,7 +8,7 @@ pipeline {
     environment {
         IMAGE_NAME = "churn-api"
         TAG = "${BUILD_NUMBER}"
-        REGISTRY = "docker.io/YOUR_USERNAME"   // change this
+        REGISTRY = "docker.io/shubham554"   // change this
         FULL_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${TAG}"
     }
 
@@ -54,6 +54,7 @@ pipeline {
             steps {
                 sh '''
                 test -f best_params.json || (echo "best_params.json not found!" && exit 1)
+                cat best_params.json
                 '''
             }
         }
