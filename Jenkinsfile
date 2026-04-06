@@ -69,6 +69,7 @@ pipeline {
         stage('Train Model Pipeline') {
             steps {
                 sh '''
+                set -x
                 . venv/bin/activate
                 python scripts/run_pipeline.py --input data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv --target Churn --params best_params.json
                 '''
