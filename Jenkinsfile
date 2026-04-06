@@ -39,21 +39,12 @@ pipeline {
                 '''
             }
         }
-        stage('Data featuring and modelling') {
+        stage('Hyperparameter Tuning') {
             steps {
                 sh '''
                 . venv/bin/activate
                 python3 scripts/test_pipeline_phase1_data_features.py
                 python3 scripts/test_pipeline_phase2_modeling.py
-                '''
-            }
-        }
-
-        stage('Hyperparameter Tuning') {
-            steps {
-                sh '''
-                . venv/bin/activate
-                python scripts/run_pipeline.py
                 '''
             }
         }
@@ -71,7 +62,7 @@ pipeline {
                 sh '''
                 set -x
                 . venv/bin/activate
-                python scripts/run_pipeline.py --input data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv --target Churn
+                python3 scripts/run_pipeline.py --input data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv --target Churn
                 '''
             }
         }
