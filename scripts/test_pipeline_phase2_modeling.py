@@ -6,7 +6,7 @@ import json
 
 print("=== Phase 2: Modeling with XGBoost ===")
 
-df = pd.read_csv("/home/jovyan/work/Telco-Customer-Churn-ML/data/processed/WA_Fn-UseC_-Telco-Customer-Churn.csv")
+df = pd.read_csv("data/processed/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 
 # target must be numeric 0/1
 if df["Churn"].dtype == "object":
