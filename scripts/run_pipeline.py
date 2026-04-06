@@ -6,6 +6,7 @@ Runs sequentially: load → validate → preprocess → feature engineering
 import os
 import sys
 import time
+import json
 import argparse
 import pandas as pd
 import mlflow
@@ -38,7 +39,7 @@ def main(args):
     # Configure MLflow to use local file-based tracking (not a tracking server)
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     mlruns_path = args.mlflow_uri or f"file://{project_root}/mlruns"  # Local file-based tracking
-    mlflow.set_tracking_uri("http://mlflow:5000")
+    mlflow.set_tracking_uri(args.mlflow_uri or "http://mlflow:5000")
     mlflow.set_experiment(args.experiment)  # Creates experiment if doesn't exist
 
     # Start MLflow run - all subsequent logging will be tracked under this run
@@ -140,27 +141,42 @@ def main(args):
 
         # === STAGE 5: Model Training with Optimized Hyperparameters ===
         print("🤖 Training XGBoost model...")
-        
+
+        params_path = os.path.join(project_root, "best_params.json")
+        with open(params_path, "r") as f:
+            config = json.load(f)
+        best_params = config["best_params"]
+        threshold = config.get("threshold", 0.3)
+        best_params.update({
+            "scale_pos_weight": scale_pos_weight,
+            "random_state": 42,
+            "n_jobs": -1,
+            "eval_metric": "logloss"
+        })
+        print("🚀 Using best parameters from tuning:")
+        print(best_params)
         # IMPORTANT: These hyperparameters were optimized through hyperparameter tuning
         # In production, consider using hyperparameter optimization tools like Optuna
-        model = XGBClassifier(
-            # Tree structure parameters
-            n_estimators=301,        # Number of trees (OPTIMIZED)
-            learning_rate=0.034,     # Step size shrinkage (OPTIMIZED)  
-            max_depth=7,            # Maximum tree depth (OPTIMIZED)
+        # model = XGBClassifier(
+        #     # Tree structure parameters
+        #     n_estimators=301,        # Number of trees (OPTIMIZED)
+        #     learning_rate=0.034,     # Step size shrinkage (OPTIMIZED)  
+        #     max_depth=7,            # Maximum tree depth (OPTIMIZED)
             
-            # Regularization parameters
-            subsample=0.95,         # Sample ratio of training instances
-            colsample_bytree=0.98,  # Sample ratio of features for each tree
+        #     # Regularization parameters
+        #     subsample=0.95,         # Sample ratio of training instances
+        #     colsample_bytree=0.98,  # Sample ratio of features for each tree
             
-            # Performance parameters
-            n_jobs=-1,              # Use all CPU cores
-            random_state=42,        # Reproducible results
-            eval_metric="logloss",  # Evaluation metric
+        #     # Performance parameters
+        #     n_jobs=-1,              # Use all CPU cores
+        #     random_state=42,        # Reproducible results
+        #     eval_metric="logloss",  # Evaluation metric
             
-            # ESSENTIAL: Handle class imbalance
-            scale_pos_weight=scale_pos_weight  # Weight for positive class (churners)
-        )
+        #     # ESSENTIAL: Handle class imbalance
+        #     scale_pos_weight=scale_pos_weight  # Weight for positive class (churners)
+        # )
+        
+        model = XGBClassifier(**best_params)
 
         # === Train Model and Track Training Time ===
         t0 = time.time()
@@ -178,7 +194,7 @@ def main(args):
         
         # Apply classification threshold (default: 0.35, optimized for churn detection)
         # Lower threshold = more sensitive to churn (higher recall, lower precision)
-        y_pred = (proba >= args.threshold).astype(int)
+        y_pred = (proba >= threshold).astype(int)
         pred_time = time.time() - t1
         mlflow.log_metric("pred_time", pred_time)  # Track inference performance
 
@@ -238,5 +254,6 @@ if __name__ == "__main__":
 python scripts/run_pipeline.py \                                            
     --input data/raw/Telco-Customer-Churn.csv \
     --target Churn
+    --params best_params.json
 
 """
