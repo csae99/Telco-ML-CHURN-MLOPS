@@ -52,7 +52,7 @@ print(f"✅ Loaded {len(feature_columns)} features")
 # ================================
 # LOAD TEST DATA
 # ================================
-test_data_path = "data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv"
+test_data_path = "data/processed/WA_Fn-UseC_-Telco-Customer-Churn.csv"
 df_test = pd.read_csv(test_data_path)
 
 target_column = "Churn"

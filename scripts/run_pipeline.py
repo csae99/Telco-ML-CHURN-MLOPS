@@ -146,7 +146,7 @@ def main(args):
         with open(params_path, "r") as f:
             config = json.load(f)
         best_params = config["best_params"]
-        threshold = config.get("threshold", 0.3)
+        threshold = config.get("threshold", 0.35)
         best_params.update({
             "scale_pos_weight": scale_pos_weight,
             "random_state": 42,
