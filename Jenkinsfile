@@ -20,6 +20,16 @@ pipeline {
                     url: 'https://github.com/csae99/Telco-ML-CHURN-MLOPS.git'
             }
         }
+        stage('Setup docker') {
+            steps {
+                sh '''
+                apt-get update
+                apt install docker.io -y
+                docker --version
+                docker ps
+                '''
+            }
+        }
         stage('Setup Python Environment') {
             steps {
                 sh '''
