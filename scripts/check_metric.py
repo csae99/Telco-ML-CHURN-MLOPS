@@ -52,20 +52,28 @@ print(f"✅ Loaded {len(feature_columns)} features")
 # ================================
 # LOAD TEST DATA
 # ================================
-test_data_path = "data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv"
-df_test = pd.read_csv(test_data_path)
+# test_data_path = "data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv"
+# df_test = pd.read_csv(test_data_path)
 
+test_path = mlflow.artifacts.download_artifacts(
+    run_id=run_id,
+    artifact_path="test_data.csv"
+)
+
+df_test = pd.read_csv(test_path)
 target_column = "Churn"
 
 # ================================
 # APPLY SAME PIPELINE
 # ================================
-df_test = preprocess_data(df_test)
-df_test_enc = build_features(df_test, target_col=target_column)
+# df_test = preprocess_data(df_test)
+# df_test_enc = build_features(df_test, target_col=target_column)
 
-X_test = df_test_enc.drop(columns=[target_column])
-y_test = df_test_enc[target_column]
+# X_test = df_test_enc.drop(columns=[target_column])
+# y_test = df_test_enc[target_column]
 
+X_test = df_test.drop(columns=[target_column])
+y_test = df_test[target_column]
 # CRITICAL: align columns
 X_test = X_test.reindex(columns=feature_columns, fill_value=0)
 

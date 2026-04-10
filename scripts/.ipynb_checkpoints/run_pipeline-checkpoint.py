@@ -133,6 +133,17 @@ def main(args):
         )
         print(f"✅ Train: {X_train.shape[0]} samples | Test: {X_test.shape[0]} samples")
 
+        # Save test set for reproducibility
+        test_save_path = os.path.join(project_root, "artifacts", "test_data.csv")
+
+        test_df = X_test.copy()
+        test_df[target] = y_test
+
+        test_df.to_csv(test_save_path, index=False)
+
+        mlflow.log_artifact(test_save_path)
+        print("✅ Test dataset saved for reproducibility")
+
         # === CRITICAL: Handle Class Imbalance ===
         # Calculate scale_pos_weight to handle imbalanced dataset
         # This tells XGBoost to give more weight to the minority class (churners)
@@ -252,8 +263,7 @@ if __name__ == "__main__":
 # Use this below to run the pipeline:
 
 python scripts/run_pipeline.py \                                            
-    --input data/raw/Telco-Customer-Churn.csv \
+    --input data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv \
     --target Churn
-    --params best_params.json
 
 """
