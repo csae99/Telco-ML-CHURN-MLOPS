@@ -1,0 +1,17 @@
+ML PIPELINE
+
+Raw_data -> Data_validation-> Pre_processing-> Feature_Engineering-> Model_training-> Model_packaging-> Deployment-> Monitoring_Logging-> Model_training
+
+
+-----------------------
+docker run -p 8888:8888 -v D:/Futurism_Backup/Document/mlops/jupyter/work/jupyter/work:/home/jovyan/work custom-jupyter:latest 
+
+
+sudo curl -L -o telco-customer-churn.zip https://www.kaggle.com/api/v1/datasets/download/blastchar/telco-customer-churn
+
+----
+python -m venv myenv
+source myenv/bin/activate   # On Linux/macOS
+myenv\Scripts\activate      # On Windows
+pip install lightgbm
+-----------------
