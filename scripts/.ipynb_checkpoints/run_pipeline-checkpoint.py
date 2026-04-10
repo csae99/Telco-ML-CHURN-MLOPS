@@ -157,7 +157,7 @@ def main(args):
         with open(params_path, "r") as f:
             config = json.load(f)
         best_params = config["best_params"]
-        threshold = config.get("threshold", 0.37)
+        threshold = config.get("threshold", 0.3)
         best_params.update({
             "scale_pos_weight": scale_pos_weight,
             "random_state": 42,
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     p.add_argument("--input", type=str, required=True,
                    help="path to CSV (e.g., data/raw/Telco-Customer-Churn.csv)")
     p.add_argument("--target", type=str, default="Churn")
-    p.add_argument("--threshold", type=float, default=0.37)
+    p.add_argument("--threshold", type=float, default=0.3)
     p.add_argument("--test_size", type=float, default=0.2)
     p.add_argument("--experiment", type=str, default="Telco Churn")
     p.add_argument("--mlflow_uri", type=str, default=None,

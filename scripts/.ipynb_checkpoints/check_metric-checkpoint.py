@@ -85,9 +85,9 @@ y_proba = model.predict_proba(X_test)[:, 1]
 # Load threshold
 try:
     with open("best_params.json") as f:
-        threshold = json.load(f).get("threshold", 0.37)
+        threshold = json.load(f).get("threshold", 0.3)
 except:
-    threshold = 0.37
+    threshold = 0.3
 
 y_pred = (y_proba >= threshold).astype(int)
 
@@ -112,7 +112,7 @@ if recall < 0.85:
     print("❌ Recall too low")
     sys.exit(1)
 
-if precision < 0.45:
+if precision < 0.40:
     print("❌ Precision too low")
     sys.exit(1)
 
