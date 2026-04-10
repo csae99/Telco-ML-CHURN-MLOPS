@@ -85,9 +85,9 @@ y_proba = model.predict_proba(X_test)[:, 1]
 # Load threshold
 try:
     with open("best_params.json") as f:
-        threshold = json.load(f).get("threshold", 0.36)
+        threshold = json.load(f).get("threshold", 0.37)
 except:
-    threshold = 0.36
+    threshold = 0.37
 
 y_pred = (y_proba >= threshold).astype(int)
 
