@@ -4,7 +4,7 @@ Raw_data -> Data_validation-> Pre_processing-> Feature_Engineering-> Model_train
 
 
 -----------------------
-docker run -p 8888:8888 -v D:/Futurism_Backup/Document/mlops/jupyter/work/jupyter/work:/home/jovyan/work custom-jupyter:latest 
+docker run -p 8888:8888 -v D:/Document/mlops/jupyter/work/jupyter/work:/home/jovyan/work custom-jupyter:latest 
 
 
 sudo curl -L -o telco-customer-churn.zip https://www.kaggle.com/api/v1/datasets/download/blastchar/telco-customer-churn
