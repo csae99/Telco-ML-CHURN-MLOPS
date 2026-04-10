@@ -135,9 +135,11 @@ pipeline {
 
     post {
         success {
+            cleanWs()
             echo "✅ Pipeline completed successfully!"
         }
         failure {
+            cleanWs()
             echo "❌ Pipeline failed!"
         }
     }
