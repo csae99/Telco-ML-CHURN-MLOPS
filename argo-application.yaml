@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/csae99/ayur.git
+    targetRevision: main
+    path: Microservice-k8s/helm-chart/frontend        # path where Chart.yaml exists
+
+    helm:
+      valueFiles:
+        - values.yaml              # or custom-values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ayur
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
